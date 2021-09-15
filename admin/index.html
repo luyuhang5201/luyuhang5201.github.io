@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>畅玩主页管理后台</title>
+<meta name="author" content="DeathGhost" />
+<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+<link rel="stylesheet" type="text/css" href="http://www.jq22.com/demo/jQuery-VerificationCode20160718/css/style.css" tppabs="css/style.css" />
+<style>
+body{height:100%;background:#16a085;
+    overflow: scroll;}
+canvas{z-index:-1;position:absolute;}
+
+
+    .box_cw{
+    width:70%;
+    height:110px;
+    line-height:110px;
+    text-align:center;
+    max-width:900px;
+    margin:35px auto;
+    color:#f8f8f8;
+    font-weight:bold;
+    font-size:18px;
+    border-radius:6px;
+    background:rgba(8,142,115,0.7);
+    }
+</style>
+<script src="http://www.jq22.com/jquery/1.11.1/jquery.min.js"></script>
+<script src="http://www.jq22.com/demo/jQuery-VerificationCode20160718/js/Particleground.js" tppabs="js/Particleground.js"></script>
+<script src="https://cdn.staticfile.org/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script>
+$(document).ready(function() {
+  //粒子背景特效
+  $('body').particleground({
+    dotColor: '#5cbdaa',
+    lineColor: '#5cbdaa'
+  });
+});
+</script>
+</head>
+<body>
+<script>
+var cw_key_cookie = $.cookie('key');
+  $.get("/admin/html/valxg.php",{cw_xg:"md5_key",md5_key:cw_key_cookie},function(data){
+     if(data=="200"){
+     alert("欢迎回来。")
+     }else{
+     alert("未登陆，请重新登陆。");
+     window.location.href="html/me.html"; 
+     }
+  });  
+
+</script>
+
+<div id="boox_cw">
+<a href="html/value.html">
+<div class="box_cw" style="margin-top:35px;">
+网站基本设置
+</div>
+</a>
+<a href="html/dhxg.html">
+<div class="box_cw">
+导航栏目添加
+</div>
+</a>
+<a href="html/music.html">
+<div class="box_cw">
+网站歌曲添加
+</div>
+</a>
+<a href="html/lunbo.html">
+<div class="box_cw">
+轮播图添加
+</div>
+</a>
+<a href="html/mima.html">
+<div class="box_cw">
+登陆密码修改
+</div>
+</a>
+</div>
+</body>
+
+</html>

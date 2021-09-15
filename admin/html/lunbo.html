@@ -1,0 +1,234 @@
+<!DOCTYPE HTML>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>轮播信息修改</title>
+		<script type="text/javascript" src="http://xiaocwi.gitee.io/egao/apicolud/jquery.js"></script>
+    </head>
+    <style>
+        body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,button,textarea,
+p,blockquote,th,td { margin:0; padding:0; }
+body { background:#fff;color:#555;font-size:14px;font-family:Verdana,Arial,Helvetica,sans-serif;}
+td,th,caption { font-size:14px; }
+h1, h2, h3, h4, h5, h6 {font-weight:normal; font-size:100%;}
+address, caption, cite, code, dfn, em,strong,th,var{font-style:normal;font-weight:normal;}
+a { color:#555; text-decoration:none; }
+a:hover { text-decoration:underline; }
+img { border:none; }
+ol,ul,li { list-style:none; }
+input, textarea, select, button {font:14px Verdana,Helvetica,Arial,sans-serif;}
+table {border-collapse:collapse;}
+html {overflow-y:scroll;} 
+.clearfix:after {content: ".";display:block;height:0;clear:both;visibility:hidden;}
+.clearfix {*zoom:1;}
+
+body{
+font-size:16px;
+}
+.dh{
+display:flex;
+height:45px;
+line-height:45px;
+font-size:15px;
+padding:0px 9px 0px 5px;
+border-bottom:1px solid #ccc;
+justify-content:space-between;
+align-items:center;
+}
+.left{
+display:flex;
+height:45px;
+align-items:center;
+justify-content:space-between;
+}
+.left img{
+width:30px;
+height:30px;
+border-radius:100%;
+}
+.left p{
+margin-left:9px;
+}
+.dh span{
+font-size:14px;
+color:red;
+margin:0px 5px;
+}
+
+#tj{
+text-align:center;
+width:100%;
+height:45px;
+line-height:45px;
+font-size:16px;
+}
+
+#box{
+width:300px;
+height:260px;
+border-radius:9px;
+border:1px solid #ccc;
+position:fixed;
+padding:3px;
+top:0;
+left:0;
+right:0;
+bottom:0;
+margin:auto;
+background:white;
+padding-top:9px;
+padding-left:9px;
+}
+.text_val{
+width:90%;
+height:40px;
+margin:6px 0px;;
+}
+#qd{
+width:98%;
+text-align:right;
+}
+.zhe{
+margin:0px;
+}
+
+.img_bo{
+width:95%;
+border-radius:6px;
+padding:9px 0px;
+border:1px solid #ccc;
+margin:0 auto;
+margin-bottom:10px;
+}
+
+.img_bo img{
+width:95%;
+border-radius:6px;
+margin-left:2.5%;
+}
+.span_bo {
+width:95%;
+display:flex;
+font-size:15px;
+margin-top:6px;
+text-align:right;
+margin:0 auto;
+justify-content:space-between;
+align-items:center;
+margin-top:9px;
+}
+.lb_right{
+color:red;
+text-align:right;
+}
+</style>
+
+<body>
+<script src="https://cdn.staticfile.org/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script>
+  cw_key_cookie = $.cookie('key');
+  $.get("valxg.php",{cw_xg:"md5_key",md5_key:cw_key_cookie},function(data){
+     if(data=="200"){
+     }else{
+     alert("未登陆，请重新登陆。");
+     window.location.href="me.html"; 
+     }
+  });  
+</script>
+<div id="box" style="display:none">
+<p>轮播图地址：</p>
+<textarea class="text_val img_val"></textarea> 
+<p>轮播图文字描述：</p>
+<textarea class="text_val texts_val"></textarea> 
+<p>轮播图跳转链接：</p>
+<textarea class="text_val lj_val"></textarea> 
+<p id="qd">确定</p>
+</div>
+
+<div id="boox">
+
+</div>
+<p id="tj">添加轮播图</p>
+</body>
+
+<script>
+var leixin;
+var id_s;
+
+$.get("/admin/html/value.php",function(data){
+    for(var tp=0;tp<data.lunbo.length;tp++){
+    $("#boox").append('<div class="img_bo" id_lunbo="'+data.lunbo[tp].id+'" val_lj="'+data.lunbo[tp].lj+'"><img src="'+data.lunbo[tp].img+'"><div class="span_bo"><div class="lb_left"><span>'+data.lunbo[tp].text+'</span></div><div class="lb_right"><span class="bj">编辑</span>&nbsp;&nbsp;<span class="sc">删除</span></div></div></div>');
+}
+
+//编辑歌曲
+$(".bj").click(function(){
+$("#box").show();
+leixin = "lunbo_bj";
+id_s = $(this).parent().parent().parent().attr("id_lunbo");
+var img_s = $(this).parent().parent().parent().find("img").attr("src");
+var text_s = $(this).parent().parent().parent().find(".lb_left span").text();
+var lj_s = $(this).parent().parent().parent().attr("val_lj");
+$(".img_val").text(img_s);
+$(".texts_val").text(text_s);
+$(".lj_val").text(lj_s);
+});
+
+//删除歌曲
+$(".sc").click(function(){
+var sc_json = {
+cw_xg:"lunbo_sc",
+cw_id:$(this).parent().parent().parent().attr("id_lunbo"),
+md5_key:cw_key_cookie,
+}
+var flag=confirm("确定删除吗？");
+ if(flag){
+ $.get("/admin/html/valxg.php",sc_json,function(data){
+   alert(data);   
+   window.location.reload();
+ });}
+});
+
+});
+
+
+
+//添加歌曲
+$("#tj").click(function(){
+$(".text_val").text("");
+$("#box").show();
+leixin = "lunbo_tj";
+});
+
+
+$("#qd").click(function(){
+ var tj_json = {
+    lunbo_leixin:leixin,
+    cw_xg:"lunbo",
+    lunbo_id:id_s,
+    lunbo_img:$(".img_val").val(),
+    lunbo_text:$(".texts_val").val(),
+    lunbo_lj:$(".lj_val").val(),
+    md5_key:cw_key_cookie,
+ }
+ if(tj_json.lunbo_img==""){
+ alert("请填写轮播图片地址。");
+ }else if(tj_json.lunbo_text==""){
+ alert("请填写描述文本。");
+ }else if(tj_json.lunbo_lj==""){
+ alert("请填写跳转链接。");
+ }else{
+ $("#box").hide();
+ $.get("/admin/html/valxg.php",tj_json,function(data){
+   alert(data);   
+   window.location.reload();
+ });
+ }
+});
+
+
+
+</script>
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE HTML>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>网站基本信息修改</title>
+		<script type="text/javascript" src="http://xiaocwi.gitee.io/egao/apicolud/jquery.js"></script>
+    </head>
+    <style>
+        body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,button,textarea,
+p,blockquote,th,td { margin:0; padding:0; }
+body { background:#fff;color:#555;font-size:14px;font-family:Verdana,Arial,Helvetica,sans-serif;}
+td,th,caption { font-size:14px; }
+h1, h2, h3, h4, h5, h6 {font-weight:normal; font-size:100%;}
+address, caption, cite, code, dfn, em,strong,th,var{font-style:normal;font-weight:normal;}
+a { color:#555; text-decoration:none; }
+a:hover { text-decoration:underline; }
+img { border:none; }
+ol,ul,li { list-style:none; }
+input, textarea, select, button {font:14px Verdana,Helvetica,Arial,sans-serif;}
+table {border-collapse:collapse;}
+html {overflow-y:scroll;} 
+.clearfix:after {content: ".";display:block;height:0;clear:both;visibility:hidden;}
+.clearfix {*zoom:1;}
+
+body{
+font-size:16px;
+padding:9px;
+}
+
+.text_val{
+width:90%;
+height:90px;
+margin:9px 0px;
+padding:9px;
+border-radiua:5px;
+}
+#baocun{
+width:45px;
+height:45px;
+position:fixed;
+right:15px;
+bottom:30px;
+text-align:center;
+background:#53bce8;
+border-radius:100%;
+border:1px solid #959595;
+}
+
+
+#baocun img{
+width:30px;
+height:30px;
+margin-top:7.5px;
+}
+    </style>
+<body>
+<script src="https://cdn.staticfile.org/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script>
+  cw_key_cookie = $.cookie('key');
+  $.get("valxg.php",{cw_xg:"md5_key",md5_key:cw_key_cookie},function(data){
+     if(data=="200"){
+     }else{
+     alert("未登陆，请重新登陆。");
+     window.location.href="me.html"; 
+     }
+  });  
+</script>
+<p>网站标题：</p>
+<textarea class="text_val cw_title" onscroll="this.rows++;"></textarea> 
+<p>网站描述：</p>
+<textarea class="text_val cw_describe" onscroll="this.rows++;"></textarea> 
+<p>网站头像地址：</p>
+<textarea class="text_val cw_headportrait" onscroll="this.rows++;"></textarea> 
+<p>网站小昵称：</p>
+<textarea class="text_val cw_head_title" onscroll="this.rows++;"></textarea> 
+<p>网站小语录：</p>
+<textarea class="text_val cw_yl_title" onscroll="this.rows++;"></textarea> 
+<p>网站运行时间：</p>
+<textarea class="text_val cw_time" onscroll="this.rows++;"></textarea> 
+<p>网站底部版权信息：</p>
+<textarea class="text_val cw_bottom_title" onscroll="this.rows++;"></textarea> 
+<p>网站右边看板娘图片地址：</p>
+<textarea class="text_val cw_bottom_img" onscroll="this.rows++;"></textarea> 
+<p>自定义弹窗内容(不填写则使用热评)：</p>
+<textarea class="text_val cw_zdy_title" onscroll="this.rows++;"></textarea> 
+<p>是否开启弹窗(0开启,1关闭)：</p>
+<textarea class="text_val cw_tc" onscroll="this.rows++;"></textarea> 
+<p>是否开启花瓣飘落(0开启,1关闭)：</p>
+<textarea class="text_val cw_huabang" onscroll="this.rows++;"></textarea> 
+<div id="baocun">
+<img src="img/bc.png">
+</div>
+<script>
+ $.get("/admin/html/value.php",function(data){
+ $(".cw_title").text(data.cw_value[0].cw_title);
+ $(".cw_describe").text(data.cw_value[0].cw_describe);
+ $(".cw_headportrait").text(data.cw_value[0].cw_headportrait);
+ $(".cw_head_title").text(data.cw_value[0].cw_head_title);
+ $(".cw_yl_title").text(data.cw_value[0].cw_yl_title);
+ $(".cw_time").text(data.cw_value[0].cw_time);
+ $(".cw_bottom_title").text(data.cw_value[0].cw_bottom_title);
+ $(".cw_bottom_img").text(data.cw_value[0].cw_bottom_img);
+ $(".cw_zdy_title").text(data.cw_value[0].cw_zdy_title);
+ $(".cw_tc").text(data.cw_value[0].cw_tc);
+ $(".cw_huabang").text(data.cw_value[0].cw_huabang);
+ });
+ 
+ $("#baocun").click(function(){
+ var cw_title = $(".cw_title").val();
+ var cw_describe = $(".cw_describe").val();
+ var cw_headportrait = $(".cw_headportrait").val();
+ var cw_head_title = $(".cw_head_title").val();
+ var cw_yl_title = $(".cw_yl_title").val();
+ var cw_time = $(".cw_time").val();
+ var cw_bottom_title = $(".cw_bottom_title").val();
+ var cw_bottom_img = $(".cw_bottom_img").val();
+ var cw_zdy_title = $(".cw_zdy_title").val();
+ var cw_tc = $(".cw_tc").val();
+ var cw_huabang = $(".cw_huabang").val();
+ var xg_json = {
+    cw_xg:"value",
+    cw_title:$(".cw_title").val(),
+    cw_describe:$(".cw_describe").val(),
+    cw_headportrait:$(".cw_headportrait").val(),
+    cw_head_title:$(".cw_head_title").val(),
+    cw_yl_title:$(".cw_yl_title").val(),
+    cw_time:$(".cw_time").val(),
+    cw_bottom_title:$(".cw_bottom_title").val(),
+    cw_bottom_img:$(".cw_bottom_img").val(),
+    cw_zdy_title:$(".cw_zdy_title").val(),
+    cw_tc:$(".cw_tc").val(),
+    cw_huabang:$(".cw_huabang").val(),
+    md5_key:cw_key_cookie,
+ }
+ if(xg_json.cw_title==""){
+ alert("请填写网站标题。");
+ }else if(xg_json.cw_describe==""){
+ alert("请填写网站描述文本。");
+ }else if(xg_json.cw_headportrait==""){
+ alert("请填写网站头像地址。");
+ }else if(xg_json.cw_head_title==""){
+ alert("请填写网站小昵称。");
+ }else if(xg_json.cw_yl_title==""){
+ alert("请填写网站小语录。");
+ }else if(xg_json.cw_time==""){
+ alert("请填写网站运行时间。");
+ }else if(xg_json.cw_bottom_title==""){
+ alert("请填写网站底部版权信息。");
+ }else if(xg_json.cw_bottom_img==""){
+ alert("请填写看板娘图片地址。");
+ }else if(xg_json.cw_tc==""){
+ alert("请正确填写开启弹窗。");
+ }else if(xg_json.cw_huabang==""){
+ alert("请正确填写开启花瓣飘落。");
+ }else{
+ 
+ }
+ 
+ $.get("/admin/html/valxg.php",xg_json,function(data){
+   alert(data);   
+ });
+ 
+ });
+</script>
+</body>
+</html>
